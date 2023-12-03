@@ -6,14 +6,18 @@ function injectTest() {
     // Step 6
     if(!document.querySelector('.HeroInjectionFiberTwo')) {
         searchElem(plansParagraphs, 'Fibre 2', 'HeroInjectionFiberTwo');
-        document.querySelector('.HeroInjectionFiberTwo').parentElement.parentElement.parentElement.previousElementSibling.style.display = 'none';
-        document.querySelector('.HeroInjectionFiberTwo').parentElement.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement.style.marginTop = '52px';
+        if(document.querySelector('.HeroInjectionFiberTwo')) {
+            document.querySelector('.HeroInjectionFiberTwo').parentElement.parentElement.parentElement.previousElementSibling.style.display = 'none';
+            document.querySelector('.HeroInjectionFiberTwo').parentElement.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement.style.marginTop = '52px';
+        }
     }
     // Step 7
     if(!document.querySelector('.HeroInjectionFiberPro')) {
         searchElem(plansParagraphs, 'Pro II Fibre 2', 'HeroInjectionFiberPro');
-        var fiberTwoHead = document.querySelector('.HeroInjectionFiberPro').parentElement.parentElement.parentElement.previousElementSibling;
-        fiberTwoHead.querySelector('p').innerHTML = 'Get £60 amazon voucher';
+        if(document.querySelector('.HeroInjectionFiberPro')) {
+            var fiberTwoHead = document.querySelector('.HeroInjectionFiberPro').parentElement.parentElement.parentElement.previousElementSibling;
+            fiberTwoHead.querySelector('p').innerHTML = 'Get £60 amazon voucher';
+        }
     }
 }
 
@@ -31,21 +35,23 @@ function searchElem(element, textSearch, newClass) {
 
 injectTest();
 
-var targetElement = document.getElementById('#content > [name=ac-extras]');
+var targetElement = document.getElementById('content').querySelector('[name=ac-extras]');
 
 // Callback function to execute when the target element appears
 function handleMutation(mutationsList, observer) {
     for (var mutation of mutationsList) {
         if (mutation.type === 'childList' && mutation.addedNodes.length > 0) {
             // Check if the #availability-checker-container is added
-            if (document.getElementById('Plans')) {
+            console.log('hit1');
+            if (document.querySelector('[name=ac-plans] > div')) {
+                console.log('hit2');
                 injectTest(); // Inject your button when the target element appears
                 observer.disconnect();
             }
 
             setTimeout(function() {
               observer.observe(targetElement, config);
-          }, 100);
+          }, 1000);
         }
     }
 }
