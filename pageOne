@@ -1,0 +1,127 @@
+// acting like an injection through Adobe Target
+//<script>
+// Function to inject the button
+function injectTest() {
+// Step 1
+
+if(!document.querySelector('.HeroInjectionHeader')) {
+  var pageHeader = document.querySelectorAll('#content div > h1');
+
+  searchElem(pageHeader, 'Get ready to unwrap the gift of broadband this holiday season!', 'HeroInjectionHeader');
+  
+  const heroHeader = document.querySelector('.HeroInjectionHeader');
+  //heroHeader.text = 'Your exclusive £60 Amazon voucher with Vodafone Broadband'
+  heroHeader.innerHTML = 'Your exclusive £60 Amazon voucher with Vodafone Broadband'
+  heroHeader.nextElementSibling.innerHTML = 'Get a £60 Amazon voucher plus PRO FIBRE 2';
+}
+
+// Step 2
+if(document.querySelector('#availability-checker-container')) {
+document.querySelector('#availability-checker-container').parentElement.classList.add('PostcodeContainer');
+var contentLength = document.querySelector('.PostcodeContainer').parentElement.children.length - 1; // will compare to array that starts from 0
+var postcodeContainer = document.querySelector('.PostcodeContainer');
+  if (postcodeContainer) {
+    var parentElement = postcodeContainer.parentElement;
+
+    // Find the index of the postcodeContainer within its parent's children
+    var position = Array.from(parentElement.children).indexOf(postcodeContainer);
+
+    for (var i = position + 1; i <= contentLength; i++) {
+      parentElement.children[i].style.display = 'none';
+    }
+  }
+  // Step 3
+  var postcodeTitle = document.querySelector('#availability-checker-container h2');
+  postcodeTitle.innerHTML = 'Enter your postcode to see your exclusive broadband deal';
+}
+
+// Step 4
+if(!document.querySelector('.HeroInjectionAddress')) {
+var changeBtnHeader = document.querySelectorAll('#address-line-form button');
+
+searchElem(changeBtnHeader, 'change address', 'HeroInjectionAddress');
+searchElem(changeBtnHeader, 'View broadband plans', 'HeroInjectionBroadbandBtn');
+
+var heroAddressElement = document.querySelector('.HeroInjectionAddress');
+  if(heroAddressElement) {
+  heroAddressElement.style.display = 'none';
+  document.querySelector('.HeroInjectionBroadbandBtn').parentElement.parentElement.classList.add('HeroInjectionViewContainer');
+  document.querySelector('.HeroInjectionViewContainer');
+
+  function handleClickOrEnter(event) {
+    // Check if the event is a mouse click or Enter key press
+    if (event.type === 'click' || (event.type === 'keydown' && event.key === 'Enter')) {
+        heroAddressElement.click(); // Trigger click event on .HeroInjectionAddress
+    }
+  }
+
+  var heroBroadbandBtn = document.querySelector('.HeroInjectionBroadbandBtn');
+
+  // Create a new button element
+  var heroInjectionBtn = document.createElement('button');
+  heroInjectionBtn.id = 'HeroInjectionBtn';
+  heroInjectionBtn.type = 'button';
+  heroInjectionBtn.textContent = 'Change address';
+
+  // Insert the new button before the .HeroInjectionBroadbandBtn element
+  heroBroadbandBtn.parentNode.insertBefore(heroInjectionBtn, heroBroadbandBtn);
+
+  var heroInjectionBtn = document.getElementById('HeroInjectionBtn');
+
+  heroInjectionBtn.addEventListener('click', handleClickOrEnter);
+  heroInjectionBtn.addEventListener('keydown', handleClickOrEnter);
+  }
+}
+
+// Step 5
+if(!document.querySelector('.HeroInjectionContractType')) {
+  var addressParagraphs = document.querySelectorAll('#address-line-form p');
+  searchElem(addressParagraphs,'Select broadband contract type','HeroInjectionContractType')
+  document.querySelector('.HeroInjectionContractType').parentElement.parentElement.parentElement.parentElement.parentElement.style.display = 'none';
+}
+
+}
+
+// goes through elements and finds one with innerHTML match
+function searchElem(element, textSearch, newClass) {
+  if(element)
+  for (var i = 0; i < element.length; i++) {
+    if (element[i].innerText.includes(textSearch)) {
+      var selectedElement = element[i];
+      selectedElement.classList.add(newClass);
+      break;
+    }
+  }
+}
+
+injectTest();
+
+var targetElement = document.getElementById('availability-checker-container');
+
+// Callback function to execute when the target element appears
+function handleMutation(mutationsList, observer) {
+    for (var mutation of mutationsList) {
+        if (mutation.type === 'childList' && mutation.addedNodes.length > 0) {
+            // Check if the #availability-checker-container is added
+            if (document.getElementById('address-line-form')) {
+                injectTest(); // Inject your button when the target element appears
+                observer.disconnect();
+            }
+
+            setTimeout(function() {
+              observer.observe(targetElement, config);
+          }, 2000);
+        }
+    }
+}
+
+// Create a new MutationObserver
+var observer = new MutationObserver(handleMutation);
+
+// Configuration of the observer
+var config = { childList: true, subtree: true };
+
+// Start observing the target element
+observer.observe(targetElement, config);
+
+//</script>
