@@ -1,18 +1,33 @@
 // acting like an injection through Adobe Target
+// https://www.vodafone.co.uk/broadband
 //<script>
 // Function to inject the button
+
+function isCurrentPageCorrect() {
+  var correctURL = 'https://www.vodafone.co.uk/broadband/existing-customer-promotions?awinaffid=VF-Affiliates&package=SF2&awc=1257_1649141544_f5fe8854875a8984d8b20b048e9797d8&cid=affUK100908';
+  return window.location.href === correctURL;
+}
+
 function injectTest() {
 // Step 1
 
 if(!document.querySelector('.HeroInjectionHeader')) {
   var pageHeader = document.querySelectorAll('#content div > h1');
 
-  searchElem(pageHeader, 'Get ready to unwrap the gift of broadband this holiday season!', 'HeroInjectionHeader');
+  searchElem(pageHeader, 'Our best broadband deals', 'HeroInjectionHeader');
   
-  const heroHeader = document.querySelector('.HeroInjectionHeader');
-  //heroHeader.text = 'Your exclusive £60 Amazon voucher with Vodafone Broadband'
+  var heroHeader = document.querySelector('.HeroInjectionHeader');
+  heroHeader.text = 'Your exclusive £60 Amazon voucher with Vodafone Broadband'
   heroHeader.innerHTML = 'Your exclusive £60 Amazon voucher with Vodafone Broadband'
   heroHeader.nextElementSibling.innerHTML = 'Get a £60 Amazon voucher plus PRO FIBRE 2';
+
+  heroHeader.parentElement.parentElement.parentElement.parentElement.nextElementSibling.classList.add('HeroInjectPictureContainer');
+  document.querySelector('.HeroInjectPictureContainer > div > div:first-child').classList.add('HeroInjectPictureReplace');
+
+  var styleElement = document.createElement('style');
+  styleElement.textContent = '.HeroInjectPictureReplace { @media (min-width: 1441px) { background-image: image-set(url(https://cdn.vodafone.co.uk/en/assets/images/large/IMG_Pro_Broadband_Affiliate_voucher.jpg)); } @media (min-width: 1025px) and (max-width: 1440px) { background-image: image-set(url(https://cdn.vodafone.co.uk/en/assets/images/medium/IMG_Pro_Broadband_Affiliate_voucher.jpg)); } @media (max-width: 1024px) { background-image: image-set(url(https://cdn.vodafone.co.uk/en/assets/images/extralarge/IMG_Pro_Broadband_Affiliate_voucher.jpg)); } }';
+
+  document.head.appendChild(styleElement);
 }
 
 // Step 2
@@ -47,6 +62,11 @@ var heroAddressElement = document.querySelector('.HeroInjectionAddress');
   heroAddressElement.style.display = 'none';
   document.querySelector('.HeroInjectionBroadbandBtn').parentElement.parentElement.classList.add('HeroInjectionViewContainer');
   document.querySelector('.HeroInjectionViewContainer');
+
+  var styleElement = document.createElement('style');
+  styleElement.textContent = 'div > .HeroInjectionViewContainer { width: calc(50% - 8px); } .HeroInjectionViewContainer > div { display: flex; } .HeroInjectionViewContainer > div > button:first-child { margin-right: 10px; background-color: white; border: black 1px solid; color: black; display: inline-flex; align-items: center; justify-content: center; box-sizing: border-box; text-align: center; position: relative; transition: all 0.4s ease 0s; line-height: 12px; max-height: 48px; font-weight: 400; border-radius: 6px; padding: 16px 24px; width: 100%; }';
+
+  document.head.appendChild(styleElement);
 
   function handleClickOrEnter(event) {
     // Check if the event is a mouse click or Enter key press
@@ -94,6 +114,8 @@ function searchElem(element, textSearch, newClass) {
   }
 }
 
+if(isCurrentPageCorrect == true) {
+
 injectTest();
 
 var targetElement = document.getElementById('availability-checker-container');
@@ -106,11 +128,11 @@ function handleMutation(mutationsList, observer) {
             if (document.getElementById('address-line-form')) {
                 injectTest(); // Inject your button when the target element appears
                 observer.disconnect();
-            }
 
-            setTimeout(function() {
-              observer.observe(targetElement, config);
-          }, 2000);
+                setTimeout(function() {
+                  observer.observe(targetElement, config);
+              }, 2000);
+            }
         }
     }
 }
@@ -123,5 +145,6 @@ var config = { childList: true, subtree: true };
 
 // Start observing the target element
 observer.observe(targetElement, config);
+}
 
 //</script>
