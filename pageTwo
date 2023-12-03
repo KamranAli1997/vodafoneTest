@@ -42,16 +42,14 @@ function handleMutation(mutationsList, observer) {
     for (var mutation of mutationsList) {
         if (mutation.type === 'childList' && mutation.addedNodes.length > 0) {
             // Check if the #availability-checker-container is added
-            console.log('hit1');
             if (document.querySelector('[name=ac-plans] > div')) {
-                console.log('hit2');
                 injectTest(); // Inject your button when the target element appears
                 observer.disconnect();
-            }
 
-            setTimeout(function() {
-              observer.observe(targetElement, config);
-          }, 1000);
+                setTimeout(function() {
+                    observer.observe(targetElement, config);
+                }, 1000);
+            }
         }
     }
 }
