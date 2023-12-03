@@ -1,0 +1,62 @@
+// https://www.vodafone.co.uk/broadband/deals/select-plan
+// Step 6
+
+function injectTest() {
+    var plansParagraphs = document.querySelectorAll('#content #Plans [data-testid="planCard-container"] h2');
+    // Step 6
+    if(!document.querySelector('.HeroInjectionFiberTwo')) {
+        searchElem(plansParagraphs, 'Fibre 2', 'HeroInjectionFiberTwo');
+        document.querySelector('.HeroInjectionFiberTwo').parentElement.parentElement.parentElement.previousElementSibling.style.display = 'none';
+        document.querySelector('.HeroInjectionFiberTwo').parentElement.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement.style.marginTop = '52px';
+    }
+    // Step 7
+    if(!document.querySelector('.HeroInjectionFiberPro')) {
+        searchElem(plansParagraphs, 'Pro II Fibre 2', 'HeroInjectionFiberPro');
+        var fiberTwoHead = document.querySelector('.HeroInjectionFiberPro').parentElement.parentElement.parentElement.previousElementSibling;
+        fiberTwoHead.querySelector('p').innerHTML = 'Get £60 amazon voucher';
+    }
+}
+
+// goes through elements and finds one with innerHTML match
+function searchElem(element, textSearch, newClass) {
+  if(element)
+  for (var i = 0; i < element.length; i++) {
+    if (element[i].innerText.includes(textSearch)) {
+      var selectedElement = element[i];
+      selectedElement.classList.add(newClass);
+      break;
+    }
+  }
+}
+
+injectTest();
+
+var targetElement = document.getElementById('#content > [name=ac-extras]');
+
+// Callback function to execute when the target element appears
+function handleMutation(mutationsList, observer) {
+    for (var mutation of mutationsList) {
+        if (mutation.type === 'childList' && mutation.addedNodes.length > 0) {
+            // Check if the #availability-checker-container is added
+            if (document.getElementById('Plans')) {
+                injectTest(); // Inject your button when the target element appears
+                observer.disconnect();
+            }
+
+            setTimeout(function() {
+              observer.observe(targetElement, config);
+          }, 100);
+        }
+    }
+}
+
+// Create a new MutationObserver
+var observer = new MutationObserver(handleMutation);
+
+// Configuration of the observer
+var config = { childList: true, subtree: true };
+
+// Start observing the target element
+observer.observe(targetElement, config);
+
+//</script>
