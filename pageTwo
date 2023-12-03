@@ -38,7 +38,7 @@ function searchElem(element, textSearch, newClass) {
   }
 }
 
-if (isPreviousPageCorrect()) { 
+if (isPreviousPageCorrect() == true) { 
     injectTest();
 
     var targetElement = document.getElementById('content').querySelector('[name=ac-extras]');
