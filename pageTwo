@@ -9,18 +9,19 @@ function isPreviousPageCorrect() {
 function injectTest() {
     var plansParagraphs = document.querySelectorAll('#content #Plans [data-testid="planCard-container"] h2');
     // Step 6
-    if(!document.querySelector('.HeroInjectionFiberTwo')) {
-        searchElem(plansParagraphs, 'Fibre 2', 'HeroInjectionFiberTwo');
-        if(document.querySelector('.HeroInjectionFiberTwo')) {
-            document.querySelector('.HeroInjectionFiberTwo').parentElement.parentElement.parentElement.previousElementSibling.style.display = 'none';
-            document.querySelector('.HeroInjectionFiberTwo').parentElement.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement.style.marginTop = '52px';
+    if(!document.querySelector('.VodaInjectionFiberTwo')) {
+        searchElem(plansParagraphs, 'Fibre 2', 'VodaInjectionFiberTwo');
+        if(document.querySelector('.VodaInjectionFiberTwo')) {
+            document.querySelector('.VodaInjectionFiberTwo').parentElement.parentElement.parentElement.previousElementSibling.style.display = 'none';
+            document.querySelector('.VodaInjectionFiberTwo').parentElement.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement.style.marginTop = '52px';
+            //could have used data-plan-id="115026" if knew it was static
         }
     }
     // Step 7
-    if(!document.querySelector('.HeroInjectionFiberPro')) {
-        searchElem(plansParagraphs, 'Pro II Fibre 2', 'HeroInjectionFiberPro');
-        if(document.querySelector('.HeroInjectionFiberPro')) {
-            var fiberTwoHead = document.querySelector('.HeroInjectionFiberPro').parentElement.parentElement.parentElement.previousElementSibling;
+    if(!document.querySelector('.VodaInjectionFiberPro')) {
+        searchElem(plansParagraphs, 'Pro II Fibre 2', 'VodaInjectionFiberPro');
+        if(document.querySelector('.VodaInjectionFiberPro')) {
+            var fiberTwoHead = document.querySelector('.VodaInjectionFiberPro').parentElement.parentElement.parentElement.previousElementSibling;
             fiberTwoHead.querySelector('p').innerHTML = 'Get £60 amazon voucher';
         }
     }
@@ -38,7 +39,7 @@ function searchElem(element, textSearch, newClass) {
   }
 }
 
-if (isPreviousPageCorrect() == true) { 
+if (isPreviousPageCorrect() === true) { 
     injectTest();
 
     var targetElement = document.getElementById('content').querySelector('[name=ac-extras]');
