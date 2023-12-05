@@ -11,22 +11,20 @@ function isCurrentPageCorrect() {
 function injectTest() {
 // Step 1
 
-if(!document.querySelector('.HeroInjectionHeader')) {
+if(!document.querySelector('.VodaInjectionHeader')) {
   var pageHeader = document.querySelectorAll('#content div > h1');
 
-  searchElem(pageHeader, 'Our best broadband deals', 'HeroInjectionHeader');
+  searchElem(pageHeader, 'Get ready to unwrap the gift of broadband this holiday season!', 'VodaInjectionHeader');
   
-  var heroHeader = document.querySelector('.HeroInjectionHeader');
-  heroHeader.text = 'Your exclusive £60 Amazon voucher with Vodafone Broadband'
-  heroHeader.innerHTML = 'Your exclusive £60 Amazon voucher with Vodafone Broadband'
+  var heroHeader = document.querySelector('.VodaInjectionHeader');
+  heroHeader.innerHTML = 'Your exclusive £60 Amazon voucher with Vodafone Broadband';
   heroHeader.nextElementSibling.innerHTML = 'Get a £60 Amazon voucher plus PRO FIBRE 2';
 
   heroHeader.parentElement.parentElement.parentElement.parentElement.nextElementSibling.classList.add('HeroInjectPictureContainer');
   document.querySelector('.HeroInjectPictureContainer > div > div:first-child').classList.add('HeroInjectPictureReplace');
 
   var styleElement = document.createElement('style');
-  styleElement.textContent = '.HeroInjectPictureReplace { @media (min-width: 1441px) { background-image: image-set(url(https://cdn.vodafone.co.uk/en/assets/images/large/IMG_Pro_Broadband_Affiliate_voucher.jpg)); } @media (min-width: 1025px) and (max-width: 1440px) { background-image: image-set(url(https://cdn.vodafone.co.uk/en/assets/images/medium/IMG_Pro_Broadband_Affiliate_voucher.jpg)); } @media (max-width: 1024px) { background-image: image-set(url(https://cdn.vodafone.co.uk/en/assets/images/extralarge/IMG_Pro_Broadband_Affiliate_voucher.jpg)); } }';
-
+  styleElement.textContent = '.HeroInjectPictureReplace { background-image: url(https://cdn.vodafone.co.uk/en/assets/images/large/IMG_Pro_Broadband_Affiliate_voucher.jpg); } @media (min-width: 1025px) and (max-width: 1440px) { .HeroInjectPictureReplace { background-image: url(https://cdn.vodafone.co.uk/en/assets/images/medium/IMG_Pro_Broadband_Affiliate_voucher.jpg); } } @media (max-width: 1024px) { .HeroInjectPictureReplace { background-image: url(https://cdn.vodafone.co.uk/en/assets/images/extralarge/IMG_Pro_Broadband_Affiliate_voucher.jpg); } }';
   document.head.appendChild(styleElement);
 }
 
@@ -51,53 +49,53 @@ var postcodeContainer = document.querySelector('.PostcodeContainer');
 }
 
 // Step 4
-if(!document.querySelector('.HeroInjectionAddress')) {
+if(!document.querySelector('.VodaInjectionAddress')) {
 var changeBtnHeader = document.querySelectorAll('#address-line-form button');
 
-searchElem(changeBtnHeader, 'change address', 'HeroInjectionAddress');
-searchElem(changeBtnHeader, 'View broadband plans', 'HeroInjectionBroadbandBtn');
+searchElem(changeBtnHeader, 'change address', 'VodaInjectionAddress');
+searchElem(changeBtnHeader, 'View broadband plans', 'VodaInjectionBroadbandBtn');
 
-var heroAddressElement = document.querySelector('.HeroInjectionAddress');
-  if(heroAddressElement) {
-  heroAddressElement.style.display = 'none';
-  document.querySelector('.HeroInjectionBroadbandBtn').parentElement.parentElement.classList.add('HeroInjectionViewContainer');
-  document.querySelector('.HeroInjectionViewContainer');
+var vodaAddressElement = document.querySelector('.VodaInjectionAddress');
+  if(vodaAddressElement) {
+  vodaAddressElement.style.display = 'none';
+  document.querySelector('.VodaInjectionBroadbandBtn').parentElement.parentElement.classList.add('VodaInjectionViewContainer');
+  document.querySelector('.VodaInjectionViewContainer');
 
   var styleElement = document.createElement('style');
-  styleElement.textContent = 'div > .HeroInjectionViewContainer { width: calc(50% - 8px); } .HeroInjectionViewContainer > div { display: flex; } .HeroInjectionViewContainer > div > button:first-child { margin-right: 10px; background-color: white; border: black 1px solid; color: black; display: inline-flex; align-items: center; justify-content: center; box-sizing: border-box; text-align: center; position: relative; transition: all 0.4s ease 0s; line-height: 12px; max-height: 48px; font-weight: 400; border-radius: 6px; padding: 16px 24px; width: 100%; }';
+  styleElement.textContent = 'div > .VodaInjectionViewContainer { width: calc(50% - 8px); } .VodaInjectionViewContainer > div { display: flex; } .VodaInjectionViewContainer > div > button:first-child { margin-right: 10px; background-color: white; border: black 1px solid; color: black; display: inline-flex; align-items: center; justify-content: center; box-sizing: border-box; text-align: center; position: relative; transition: all 0.4s ease 0s; line-height: 12px; max-height: 48px; font-weight: 400; border-radius: 6px; padding: 16px 24px; width: 100%; cursor: pointer;}';
 
   document.head.appendChild(styleElement);
 
   function handleClickOrEnter(event) {
     // Check if the event is a mouse click or Enter key press
     if (event.type === 'click' || (event.type === 'keydown' && event.key === 'Enter')) {
-        heroAddressElement.click(); // Trigger click event on .HeroInjectionAddress
+        vodaAddressElement.click(); // Trigger click event on .VodaInjectionAddress
     }
   }
 
-  var heroBroadbandBtn = document.querySelector('.HeroInjectionBroadbandBtn');
+  var vodaBroadbandBtn = document.querySelector('.VodaInjectionBroadbandBtn');
 
   // Create a new button element
-  var heroInjectionBtn = document.createElement('button');
-  heroInjectionBtn.id = 'HeroInjectionBtn';
-  heroInjectionBtn.type = 'button';
-  heroInjectionBtn.textContent = 'Change address';
+  var VodaInjectionBtn = document.createElement('button');
+  VodaInjectionBtn.id = 'VodaInjectionBtn';
+  VodaInjectionBtn.type = 'button';
+  VodaInjectionBtn.textContent = 'Change address';
 
-  // Insert the new button before the .HeroInjectionBroadbandBtn element
-  heroBroadbandBtn.parentNode.insertBefore(heroInjectionBtn, heroBroadbandBtn);
+  // Insert the new button before the .VodaInjectionBroadbandBtn element
+  vodaBroadbandBtn.parentNode.insertBefore(VodaInjectionBtn, vodaBroadbandBtn);
 
-  var heroInjectionBtn = document.getElementById('HeroInjectionBtn');
+  var VodaInjectionBtn = document.getElementById('VodaInjectionBtn');
 
-  heroInjectionBtn.addEventListener('click', handleClickOrEnter);
-  heroInjectionBtn.addEventListener('keydown', handleClickOrEnter);
+  VodaInjectionBtn.addEventListener('click', handleClickOrEnter);
+  VodaInjectionBtn.addEventListener('keydown', handleClickOrEnter);
   }
 }
 
 // Step 5
-if(!document.querySelector('.HeroInjectionContractType')) {
+if(!document.querySelector('.VodaInjectionContractType') && document.querySelector('#address-line-form p')) {
   var addressParagraphs = document.querySelectorAll('#address-line-form p');
-  searchElem(addressParagraphs,'Select broadband contract type','HeroInjectionContractType')
-  document.querySelector('.HeroInjectionContractType').parentElement.parentElement.parentElement.parentElement.parentElement.style.display = 'none';
+  searchElem(addressParagraphs,'Select broadband contract type','VodaInjectionContractType')
+  document.querySelector('.VodaInjectionContractType').parentElement.parentElement.parentElement.parentElement.parentElement.style.display = 'none';
 }
 
 }
@@ -114,7 +112,7 @@ function searchElem(element, textSearch, newClass) {
   }
 }
 
-if(isCurrentPageCorrect == true) {
+if(isCurrentPageCorrect() == true) {
 
 injectTest();
 
